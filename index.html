@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Registration</h1>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+            <span id="nameError" class="error">Please enter a valid name</span>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <span id="emailError" class="error">Please enter a valid email</span>
+        </div>
+        <div class="form-group">
+            <label for="eventSelect">Select Event:</label>
+            <select id="eventSelect" name="eventSelect" required>
+                <option value="">Choose an event</option>
+                <option value="tech-conference">Tech Conference 2024</option>
+                <option value="marketing-seminar">Marketing Seminar</option>
+                <option value="leadership-workshop">Leadership Workshop</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ticketQuantity">Number of Tickets:</label>
+            <input type="number" id="ticketQuantity" name="ticketQuantity" min="1" max="5" required>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+    <div id="confirmationMessage" style="display: none; margin-top: 20px;">
+        <h2>Registration Successful!</h2>
+        <p>Thank you for registering. We'll send the details to your email.</p>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const nameRegex = /^[a-zA-Z\s]{2,50}$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            
+            if (!nameRegex.test(fullName)) {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('nameError').style.display = 'none';
+            }
+            
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').style.display = 'none';
+            }
+            
+            if (isValid) {
+                document.getElementById('registrationForm').style.display = 'none';
+                document.getElementById('confirmationMessage').style.display = 'block';
+            }
+            
+            return false; // Prevent actual form submission
+        }
+    </script>
+</body>
+</html>
